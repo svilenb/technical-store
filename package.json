@@ -17,12 +17,16 @@
     "react": "latest",
     "react-dom": "latest",
     "webpack": "latest",
-    "webpack-cli": "latest"
+    "webpack-cli": "latest",
+    "cookie-parser": "latest",
+    "debug": "latest",
+    "http-errors": "latest",
+    "morgan": "latest"
   },
   "scripts": {
     "start": "npm-run-all -p build serve",
     "build": "webpack -w",
-    "serve": "nodemon --ignore ./build --exec babel-node -- server.js",
+    "serve": "nodemon --ignore ./build --exec babel-node -- ./bin/www",
     "production": "cross-env NODE_ENV=production npm start"
   }
 }

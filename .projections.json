@@ -1,0 +1,14 @@
+{
+  "routes/*.js": {
+    "type": "route"
+  },
+  "views/*.js": {
+    "type": "view"
+  },
+  "utils/*.js": {
+    "type": "util"
+  },
+  "public/javascripts": {
+    "type": "scripts"
+  }
+}

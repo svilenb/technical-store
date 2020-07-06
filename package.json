@@ -21,7 +21,8 @@
     "cookie-parser": "latest",
     "debug": "latest",
     "http-errors": "latest",
-    "morgan": "latest"
+    "morgan": "latest",
+    "lodash": "latest"
   },
   "scripts": {
     "start": "npm-run-all -p build serve",

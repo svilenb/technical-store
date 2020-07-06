@@ -18,12 +18,12 @@ function Copyright() {
   );
 }
 
-export default function Index() {
+export default function Index(props) {
   return (
     <Container maxWidth="sm">
       <Box my={4}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Server Rendering v4-beta example test
+          {props.content}
         </Typography>
         <ProTip />
         <Copyright />

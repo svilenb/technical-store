@@ -1,11 +1,4 @@
-const mongoose = require("mongoose");
-
-const subcategorySchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  category: { type: mongoose.Types.ObjectId, required: true, ref: "Category" }
-});
-
-const Subcategory = mongoose.model("Subcategory", subcategorySchema);
+const Subcategory = require("./models/subcategory");
 
 module.exports = {
   seedInitial: function(categories, callback) {
@@ -44,7 +37,6 @@ module.exports = {
           { name: "Freezers", category: categories[4]._id },
           { name: "Refrigerators", category: categories[4]._id },
           { name: "Cookers", category: categories[4]._id },
-
         ], callback);
       } else {
         callback();

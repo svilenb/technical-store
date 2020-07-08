@@ -1,10 +1,4 @@
-const mongoose = require("mongoose");
-
-const brandSchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-});
-
-const Brand = mongoose.model("Brand", brandSchema);
+const Brand = require("./models/brand");
 
 module.exports = {
   seedInitial: function(callback) {
@@ -18,7 +12,7 @@ module.exports = {
           { name: "TOSHIBA" },
           { name: "SONY" },
           { name: "BOSCH" },
-        ])
+        ], callback);
       } else {
         callback();
       }

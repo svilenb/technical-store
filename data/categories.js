@@ -1,10 +1,4 @@
-import mongoose from "mongoose";
-
-const categorySchema = mongoose.Schema({
-  name: { type: String, required: true, unique: true }
-});
-
-const Category = mongoose.model("Category", categorySchema);
+const Category = require("./models/category");
 
 module.exports = {
   seedInitial: function(callback) {

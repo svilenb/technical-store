@@ -1,4 +1,5 @@
 import React from 'react';
+import path from 'path';
 import ReactDOMServer from 'react-dom/server';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';

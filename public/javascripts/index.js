@@ -1,4 +1,4 @@
-import client from "../../utils/client";
-import Index from "../../views/index";
+const client = require("../../utils/client");
+const Index = require("../../views/index");
 
 client.hydrate(Index)

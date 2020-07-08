@@ -1,22 +1,29 @@
 import mongoose from "mongoose";
-import category from "../models/category";
+const category = require("../models/category");
+const subcategory = require("../models/subcategory");
 
 module.exports = function(config) {
-  mongoose.connect(config.db);
+  mongoose.connect(config.db, { useNewUrlParser: true });
 
   const db = mongoose.connection;
 
   db.on('error', console.error.bind(console, 'connection error:'));
+
   db.once('open', function() {
     console.log('Database running...')
   });
 
-  category.seedInitial(function(err) {
+  category.seedInitial(function(err, categories) {
     if (err) {
       return callback(err);
     }
 
-    console.log("Categories added to the database.");
+    if (categories) {
+      subcategory.seedInitial(categories, function(err) {
+        if (err) {
+          return callback(err);
+        }
+      });
+    }
   });
-
 };

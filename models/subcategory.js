@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const subcategorySchema = mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -39,15 +39,11 @@ module.exports = {
           { name: "Headphones And Microphones", category: categories[3]._id },
           { name: "PC Speakers", category: categories[3]._id },
 
-          { name: "DSLR cameras", category: categories[4]._id },
-          { name: "Mirrorless cameras", category: categories[4]._id },
-          { name: "Compacts cameras", category: categories[4]._id },
-          { name: "Instant digital cameras and consumables", category: categories[4]._id },
-          { name: "Lenses", category: categories[4]._id },
-          { name: "Flashes", category: categories[4]._id },
-          { name: "Camcoders", category: categories[4]._id },
-          { name: "Photo printers and scanners", category: categories[4]._id },
-          { name: "Binoculars and telescopes", category: categories[4]._id },
+          { name: "Vacuum Cleaners", category: categories[4]._id },
+          { name: "Washing machines", category: categories[4]._id },
+          { name: "Freezers", category: categories[4]._id },
+          { name: "Refrigerators", category: categories[4]._id },
+          { name: "Cookers", category: categories[4]._id },
 
         ], callback);
       } else {

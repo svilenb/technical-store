@@ -15,7 +15,7 @@ module.exports = {
           { name: "Mobile Devices" },
           { name: "PC peripherials" },
           { name: "IT Accessories" },
-          { name: "Photo and Video" },
+          { name: "Home" },
         ], callback);
       } else {
         callback();

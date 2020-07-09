@@ -38,7 +38,7 @@ module.exports = {
           });
         });
       } else {
-        callback();
+        callback(null, collection);
       }
     });
   }

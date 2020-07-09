@@ -14,7 +14,7 @@ module.exports = {
           { name: "BOSCH" },
         ], callback);
       } else {
-        callback();
+        callback(null, collection);
       }
     });
   }

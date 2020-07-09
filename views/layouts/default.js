@@ -19,6 +19,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const useStyles = makeStyles(function(theme) {
   return {
+    appBarRoot: {
+      marginBottom: theme.spacing(2),
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -57,7 +60,7 @@ export default function DefaultLayout(props) {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar className={classes.appBarRoot} position="static">
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />

@@ -42,7 +42,7 @@ module.exports = {
           { name: "Cookers", category: categories[4]._id },
         ], callback);
       } else {
-        callback();
+        callback(null, collection);
       }
     });
   }

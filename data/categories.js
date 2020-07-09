@@ -15,7 +15,7 @@ module.exports = {
           { name: "Home" },
         ], callback);
       } else {
-        callback();
+        callback(null, collection);
       }
     });
   },

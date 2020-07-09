@@ -3,26 +3,28 @@ const categories = require("../data/categories");
 const subcategories = require("../data/subcategories");
 const brands = require("../data/brands");
 const users = require("../data/users");
+const products = require("../data/products");
 
 module.exports = {
   seedInitial: function(callback) {
     async.parallel([
       function(callback) {
-        categories.seedInitial(function(err, categories) {
-          if (err) {
-            return callback(err);
-          }
+        async.waterfall([
+          function(callback) {
+            categories.seedInitial(callback);
+          },
+          function(categories, callback) {
+            if (categories) {
+              subcategories.seedInitial(categories, function(err, subcategories) {
+                if (err) {
+                  return callback(err);
+                }
 
-          if (categories) {
-            subcategories.seedInitial(categories, function(err, subcategories) {
-              if (err) {
-                return callback(err);
-              }
-
-              callback(null, { categories, subcategories })
-            });
+                callback(null, { categories, subcategories })
+              });
+            }
           }
-        });
+        ], callback);
       },
       function(callback) {
         brands.seedInitial(callback);
@@ -30,6 +32,15 @@ module.exports = {
       function(callback) {
         users.seedInitial(callback);
       }
-    ], callback);
+    ], function (err, results) {
+      if (err) {
+        return callback(err);
+      }
+
+      products.seedInitial({
+        ...results[0],
+        brands: results[1],
+      }, callback);
+    });
   }
 };

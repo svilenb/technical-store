@@ -1,9 +1,12 @@
-import express from "express";
-import engine from "../utils/engine";
-import cookieParser from "cookie-parser";
-import createError from "http-errors";
-import logger from "morgan";
-import indexRouter from "../routes/index";
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const createError = require("http-errors");
+const logger = require("morgan");
+const indexRouter = require("../routes/index");
+const engine = require("../utils/engine");
+const categoriesData = require("../data/categories");
+const subcategoriesData = require("../data/subcategories");
+const async = require("async");
 
 module.exports = function(app, config) {
   app.set('views', config.rootPath + '/views');
@@ -16,6 +19,42 @@ module.exports = function(app, config) {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use('/build', express.static(config.rootPath + '/build'));
+
+  // populate view data
+  app.use(function(req, res, next) {
+    res.locals.viewData = {};
+    next();
+  });
+  app.use(function(req, res, next) {
+    async.parallel([
+      function(callback) {
+        categoriesData.getAll(function(err, results) {
+          if (err) {
+            return callback(err);
+          }
+
+          res.locals.viewData.categories = results;
+          callback();
+        });
+      },
+      function(callback) {
+        subcategoriesData.getAll(function(err, results) {
+          if (err) {
+            return callback(err);
+          }
+
+          res.locals.viewData.subcategories = results;
+          callback();
+        });
+      }
+    ], function(err) {
+      if (err) {
+        return next(err);
+      }
+
+      next();
+    });
+  });
 
   app.use('/', indexRouter);
 

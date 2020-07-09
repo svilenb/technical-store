@@ -1,6 +1,9 @@
 const Category = require("./models/category");
 
 module.exports = {
+  getAll: function(callback) {
+    Category.find().select("_id name").exec(callback);
+  },
   seedInitial: function(callback) {
     Category.find({}).exec(function(err, collection) {
       if (collection.length === 0) {
@@ -15,5 +18,5 @@ module.exports = {
         callback();
       }
     });
-  }
+  },
 }

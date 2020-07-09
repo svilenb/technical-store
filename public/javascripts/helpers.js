@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Index from '../views/index';
-import theme from './theme';
+import Index from '../../views/index';
+import theme from '../../utils/theme';
 
 function ClienWrapper({ children }) {
   React.useEffect(() => {
@@ -22,11 +22,9 @@ function ClienWrapper({ children }) {
   );
 }
 
-module.exports = {
-  hydrate: function(component) {
-    ReactDOM.hydrate(
-      <ClienWrapper>
-        {React.createElement(component)}
-      </ClienWrapper>, document.querySelector('#root'));
-  }
+export function hydrate(component) {
+  ReactDOM.hydrate(
+    <ClienWrapper>
+      {React.createElement(component, window.bootstrappedViewData)}
+    </ClienWrapper>, document.querySelector('#root'));
 }

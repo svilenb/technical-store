@@ -22,7 +22,7 @@ module.exports = {
               callback(null, { categories, subcategories })
             });
           }
-        })
+        });
       },
       function(callback) {
         brands.seedInitial(callback);

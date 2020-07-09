@@ -1,6 +1,9 @@
 const Subcategory = require("./models/subcategory");
 
 module.exports = {
+  getAll: function(callback) {
+    Subcategory.find().select("_id name category").exec(callback);
+  },
   seedInitial: function(categories, callback) {
     Subcategory.find({}).exec(function(err, collection) {
       if (collection.length === 0) {

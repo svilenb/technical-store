@@ -8,7 +8,7 @@ import _ from "lodash";
 
 let moduleDetectRegEx;
 
-export default function engine(filePath, options, callback) {
+module.exports = function(filePath, options, callback) {
   if (!moduleDetectRegEx) {
     // Path could contain regexp characters so escape it first.
     // options.settings.views could be a single string or an array
@@ -33,7 +33,7 @@ export default function engine(filePath, options, callback) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {React.createElement(component, options)}
+          {React.createElement(component, options.viewData)}
         </ThemeProvider>,
       ),
     );
@@ -52,6 +52,7 @@ export default function engine(filePath, options, callback) {
       </head>
       <body>
         <script async src="build/${path.basename(filePath, ".js")}.bundle.js"></script>
+        <script>window.bootstrappedViewData = ${JSON.stringify(options.viewData)}</script>
         <div id="root">${html}</div>
       </body>
     </html>

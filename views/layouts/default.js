@@ -1,11 +1,6 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -16,18 +11,11 @@ import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { SnackbarProvider } from "notistack"
+import AppBar from "./AppBar";
 
 const useStyles = makeStyles(function(theme) {
   return {
-    appBarRoot: {
-      marginBottom: theme.spacing(2),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow: 1,
-    },
     accordionRoot: {
       width: '100%',
     },
@@ -60,55 +48,47 @@ export default function DefaultLayout(props) {
 
   return (
     <div>
-      <AppBar className={classes.appBarRoot} position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {props.title || "TechStore"}
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      <Container maxWidth="xl">
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <div className={classes.accordionRoot}>
-              {
-                props.categories.map(function(category) {
-                  return (
-                    <Accordion key={category.name}>
-                      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography className={classes.heading}>{category.name}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        <List component="nav">
-                          {
-                            props.subcategories.filter(function(subcategory) {
-                              return subcategory.category === category._id;
-                            }).map(function(subcategory) {
-                              return (
-                                <ListItemLink key={subcategory.name} href={`/subcategory/${subcategory._id}`}>
-                                  <ListItemText primary={subcategory.name} />
-                                </ListItemLink>
-                              );
-                            })
-                          }
-                        </List>
-                      </AccordionDetails>
-                    </Accordion>
-                  )
-                })
-              }
-            </div>
+      <SnackbarProvider maxSnack={3}>
+        <AppBar />
+        <Container maxWidth="xl">
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={3}>
+              <div className={classes.accordionRoot}>
+                {
+                  props.categories.map(function(category) {
+                    return (
+                      <Accordion key={category.name}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          <Typography className={classes.heading}>{category.name}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          <List component="nav">
+                            {
+                              props.subcategories.filter(function(subcategory) {
+                                return subcategory.category === category._id;
+                              }).map(function(subcategory) {
+                                return (
+                                  <ListItemLink key={subcategory.name} href={`/subcategory/${subcategory._id}`}>
+                                    <ListItemText primary={subcategory.name} />
+                                  </ListItemLink>
+                                );
+                              })
+                            }
+                          </List>
+                        </AccordionDetails>
+                      </Accordion>
+                    )
+                  })
+                }
+              </div>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              {props.children}
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={8}>
-            {props.children}
-          </Grid>
-        </Grid>
-        <Copyright />
-      </Container>
+          <Copyright />
+        </Container>
+      </SnackbarProvider>
     </div>
   );
 }

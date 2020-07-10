@@ -9,10 +9,10 @@ export default function Index(props) {
   return (
     <Container maxWidth="sm">
       <Box my={4}>
-        <Typography variant="h1" gutterBottom>
+        <Typography variant="body1" gutterBottom>
           {props.message}
         </Typography>
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="body2" gutterBottom>
         {props.error.status}
         </Typography>
         <pre>

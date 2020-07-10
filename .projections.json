@@ -8,6 +8,9 @@
   "utils/*.js": {
     "type": "util"
   },
+  "consts/*.js": {
+    "type": "const"
+  },
   "public/javascripts": {
     "type": "scripts"
   }

@@ -49,7 +49,7 @@ export default function DefaultLayout(props) {
   return (
     <div>
       <SnackbarProvider maxSnack={3}>
-        <AppBar />
+        <AppBar {...props} />
         <Container maxWidth="xl">
           <Grid container spacing={3}>
             <Grid item xs={12} md={3}>

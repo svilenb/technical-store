@@ -11,7 +11,10 @@
   "consts/*.js": {
     "type": "const"
   },
-  "public/javascripts": {
+  "data/*.js": {
+    "type": "data"
+  },
+  "public/javascripts/*.js": {
     "type": "scripts"
   }
 }

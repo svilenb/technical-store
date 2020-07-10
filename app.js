@@ -1,8 +1,9 @@
-import express from "express";
-import config from "./config/config";
-import expressConfig from "./config/express";
-import mongooseConfig from "./config/mongoose";
-import neo4jConfig from "./config/neo4j";
+const express = require("express");
+const config = require("./config/config");
+const expressConfig = require("./config/express");
+const mongooseConfig = require("./config/mongoose");
+const neo4jConfig = require("./config/neo4j");
+const passportConfig = require("./config/passport");
 import data from "./data";
 
 const env = process.env.NODE_ENV || 'development';
@@ -12,6 +13,7 @@ const configObject = config[env];
 const app = express();
 
 expressConfig(app, configObject);
+passportConfig();
 
 neo4jConfig.init(configObject);
 mongooseConfig.init(configObject);

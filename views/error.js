@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import ProTip from './components/ProTip';
 import Link from '@material-ui/core/Link';
 
-export default function Index(props) {
+export default function Error(props) {
   return (
     <Container maxWidth="sm">
       <Box my={4}>

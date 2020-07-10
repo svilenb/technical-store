@@ -7,8 +7,8 @@ const products = require("../data/products");
 
 module.exports = {
   seedInitial: function(callback) {
-    async.parallel([
-      function(callback) {
+    async.parallel({
+      categories: function(callback) {
         async.waterfall([
           function(callback) {
             categories.seedInitial(callback);
@@ -26,20 +26,20 @@ module.exports = {
           }
         ], callback);
       },
-      function(callback) {
+      brands: function(callback) {
         brands.seedInitial(callback);
       },
-      function(callback) {
+      users: function(callback) {
         users.seedInitial(callback);
       }
-    ], function (err, results) {
+    }, function (err, results) {
       if (err) {
         return callback(err);
       }
 
       products.seedInitial({
-        ...results[0],
-        brands: results[1],
+        ...results.categories,
+        brands: results.brands,
       }, callback);
     });
   }

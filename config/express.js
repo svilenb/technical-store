@@ -6,6 +6,7 @@ const logger = require("morgan");
 const indexRouter = require("../routes/index");
 const loginRouter = require("../routes/login");
 const logoutRouter = require("../routes/logout");
+const categoriesRouter = require("../routes/categories");
 const engine = require("../utils/engine");
 const passport = require('passport');
 const categoriesData = require("../data/categories");
@@ -15,11 +16,6 @@ const async = require("async");
 module.exports = function(app, config) {
   app.set('views', config.rootPath + '/views');
   app.set('view engine', 'js');
-  // populate view data
-  app.use(function(req, res, next) {
-    res.locals.viewData = {};
-    next();
-  });
   app.engine('js', engine)
   app.use(logger('dev'));
   app.use(cookieParser());
@@ -35,9 +31,9 @@ module.exports = function(app, config) {
   app.use('/build', express.static(config.rootPath + '/build'));
   app.use(function(req, res, next) {
     if (req.user) {
-      res.locals.viewData.currentUser = req.user;
+      res.locals.currentUser = req.user;
     } else {
-      res.locals.viewData.currentUser = undefined;
+      res.locals.currentUser = undefined;
     }
 
     next();
@@ -51,7 +47,7 @@ module.exports = function(app, config) {
             return callback(err);
           }
 
-          res.locals.viewData.categories = results;
+          res.locals.categories = results;
           callback();
         });
       },
@@ -61,7 +57,7 @@ module.exports = function(app, config) {
             return callback(err);
           }
 
-          res.locals.viewData.subcategories = results;
+          res.locals.subcategories = results;
           callback();
         });
       }
@@ -77,6 +73,7 @@ module.exports = function(app, config) {
   app.use("/", indexRouter);
   app.use("/login", loginRouter);
   app.use("/logout", logoutRouter);
+  app.use("/category", categoriesRouter);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

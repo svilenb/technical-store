@@ -4,6 +4,7 @@ module.exports = {
   context: path.resolve(__dirname, 'public/javascripts'),
   entry: {
     index: './index.js',
+    products: './products.js'
   },
   mode: process.env.NODE_ENV || 'development',
   output: {

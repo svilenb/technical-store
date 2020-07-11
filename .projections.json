@@ -8,8 +8,14 @@
   "utils/*.js": {
     "type": "util"
   },
+  "controllers/*.js": {
+    "type": "controller"
+  },
   "consts/*.js": {
     "type": "const"
+  },
+  "config/*.js": {
+    "type": "config"
   },
   "data/*.js": {
     "type": "data"

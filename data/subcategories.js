@@ -4,6 +4,9 @@ module.exports = {
   getAll: function(callback) {
     Subcategory.find().select("_id name category").exec(callback);
   },
+  getByName: function(name, callback) {
+    Subcategory.findOne({ name }).select("_id name category").exec(callback);
+  },
   seedInitial: function(categories, callback) {
     Subcategory.find({}).exec(function(err, collection) {
       if (collection.length === 0) {

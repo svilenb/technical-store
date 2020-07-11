@@ -3,6 +3,9 @@ const Product = require("./models/product");
 const picturesPath = '\\img\\products\\';
 
 module.exports = {
+  getByCategoryId: function(categoryId, callback) {
+    Product.find({ category: categoryId }).select("_id name").exec(callback);
+  },
   seedInitial: function(data, callback) {
     Product.find({}).exec(function(err, collection) {
       if (collection.length === 0) {
@@ -77,5 +80,5 @@ module.exports = {
         callback(null, collection);
       }
     });
-  }
+  },
 };

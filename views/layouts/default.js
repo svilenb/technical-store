@@ -45,6 +45,11 @@ function ListItemLink(props) {
 
 export default function DefaultLayout(props) {
   const classes = useStyles();
+  const [accordionExpanded, setAccordionExpanded] = React.useState(false);
+
+  const handleAccordionChange = (panel) => (event, isExpanded) => {
+    setAccordionExpanded(isExpanded ? panel : false);
+  };
 
   return (
     <div>
@@ -57,7 +62,10 @@ export default function DefaultLayout(props) {
                 {
                   props.categories.map(function(category) {
                     return (
-                      <Accordion key={category.name}>
+                      <Accordion
+                        key={category.name}
+                        expanded={accordionExpanded === category.name}
+                        onChange={handleAccordionChange(category.name)}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                           <Typography className={classes.heading}>{category.name}</Typography>
                         </AccordionSummary>
@@ -68,7 +76,7 @@ export default function DefaultLayout(props) {
                                 return subcategory.category === category._id;
                               }).map(function(subcategory) {
                                 return (
-                                  <ListItemLink key={subcategory.name} href={`/subcategory/${subcategory._id}`}>
+                                  <ListItemLink key={subcategory.name} href={`/category/${category.name}/subcategory/${subcategory.name}`}>
                                     <ListItemText primary={subcategory.name} />
                                   </ListItemLink>
                                 );

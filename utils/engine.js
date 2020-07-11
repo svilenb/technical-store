@@ -27,13 +27,14 @@ module.exports = function(filePath, options, callback) {
 
     let component = require(filePath);
     component = component.default || component;
+    const { settings, _locals, ...props } = options;
     // Render the component to a string.
     const html = ReactDOMServer.renderToString(
       sheets.collect(
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {React.createElement(component, options.viewData)}
+          {React.createElement(component, props)}
         </ThemeProvider>,
       ),
     );
@@ -51,8 +52,8 @@ module.exports = function(filePath, options, callback) {
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       </head>
       <body>
-        <script async src="build/${path.basename(filePath, ".js")}.bundle.js"></script>
-        <script>window.bootstrappedViewData = ${JSON.stringify(options.viewData)}</script>
+        <script async src="/build/${path.basename(filePath, ".js")}.bundle.js"></script>
+        <script>window.bootstrappedViewData = ${JSON.stringify(props)}</script>
         <div id="root">${html}</div>
       </body>
     </html>

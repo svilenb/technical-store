@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "target": "es6",
+    "checkJs": false
+  },
+  "exclude": ["node_modules", "build"]
+}

@@ -12,13 +12,18 @@ import Grid from '@material-ui/core/Grid';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
+const useStyles = makeStyles(function(theme) {
+  return {
+    breadcrumbs: {
+      marginBottom: theme.spacing(3)
+    },
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+      height: 140,
+    },
+  }
 });
 
 export default function Products(props) {
@@ -26,13 +31,32 @@ export default function Products(props) {
 
   return (
     <DefaultLayout {...props}>
+      <Breadcrumbs className={classes.breadcrumbs} aria-label="breadcrumb">
+        <Link color="inherit" href="/">
+          Home
+        </Link>
+        {
+          !!props.subcategory ? (
+            <Link color="inherit" href={`/category/${props.category.name}`}>
+              {props.category.name}
+            </Link>
+          ) : (
+            <Typography color="textPrimary">{props.category.name}</Typography>
+          )
+        }
+        {
+          !!props.subcategory && (
+            <Typography color="textPrimary">{props.subcategory.name}</Typography>
+          )
+        }
+      </Breadcrumbs>
       {
         !!props.products.length ? (
           <Grid container spacing={3}>
             {
               props.products.map(function(product) {
                 return (
-                  <Grid item xs={12} md={6}>
+                  <Grid key={product.name} item xs={12} md={6}>
                     <Card className={classes.root}>
                       <CardActionArea>
                         <CardMedia

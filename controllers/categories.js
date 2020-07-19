@@ -1,3 +1,4 @@
+const async = require("async");
 const categoriesData = require("../data/categories");
 const subcategoriesData = require("../data/subcategories");
 const productsData = require("../data/products");
@@ -16,25 +17,34 @@ module.exports = {
           return next(err);
         }
 
-        res.render("products", {
-          products
+        res.render(CONTROLLER_NAME + "_products", {
+          products,
+          category
         });
       });
     });
   },
   getSubcategoryProducts: function(req, res, next) {
-    subcategoriesData.getByName(req.params.subcategoryName, function(err, subcategory) {
+    categoriesData.getByName(req.params.categoryName, function(err, category) {
       if (err) {
         return next(err);
       }
 
-      productsData.getBySubcategoryId(subcategory._id, function(err, products) {
+      subcategoriesData.getByName(req.params.subcategoryName, function(err, subcategory) {
         if (err) {
           return next(err);
         }
 
-        res.render(CONTROLLER_NAME + "_products", {
-          products
+        productsData.getBySubcategoryId(subcategory._id, function(err, products) {
+          if (err) {
+            return next(err);
+          }
+
+          res.render(CONTROLLER_NAME + "_products", {
+            products,
+            category,
+            subcategory
+          });
         });
       });
     });

@@ -1,10 +1,12 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   context: path.resolve(__dirname, 'public/javascripts'),
   entry: {
-    index: './index.js',
-    products: './products.js'
+    home_index: './home_index.js',
+    categories_products: './categories_products.js'
   },
   mode: process.env.NODE_ENV || 'development',
   output: {
@@ -21,4 +23,13 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [{
+        from: "../img",
+        to: "img",
+      }]
+    }),
+  ]
 };

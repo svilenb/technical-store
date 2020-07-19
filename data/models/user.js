@@ -20,7 +20,7 @@ userSchema.methods.authenticate = function(password) {
   }
 }
 
-var minUsernameLength = 6;
+var minUsernameLength = 3;
 var maxUsernameLength = 20;
 
 userSchema.virtual('minUsernameLength').get(function() {

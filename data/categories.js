@@ -15,7 +15,7 @@ module.exports = {
           { name: "Mobile Devices" },
           { name: "PC peripherials" },
           { name: "IT Accessories" },
-          { name: "Home" },
+          { name: "Home appliances" },
         ], callback);
       } else {
         callback(null, collection);

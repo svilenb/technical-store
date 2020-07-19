@@ -5,7 +5,7 @@ module.exports = {
   development: {
     rootPath,
     mongodb: "mongodb://localhost/tecthstore",
-    neo4jdb: "neo4j://localhost",
+    neo4jdb: "neo4j://localhost:11003",
     neo4jUsername: "neo4j",
     neo4jPassword: "magicunicorns"
   },

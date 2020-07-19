@@ -41,5 +41,9 @@
     "build": "webpack -w",
     "serve": "nodemon --ignore ./build --exec babel-node -- ./bin/www",
     "production": "cross-env NODE_ENV=production npm start"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.3"
   }
 }

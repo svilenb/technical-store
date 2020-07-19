@@ -1,10 +1,15 @@
 const Product = require("./models/product");
 
-const picturesPath = '\\img\\products\\';
+const picturesPath = '/img/products/';
+
+const PRODUCTS_PROJECTION = "_id name description photos";
 
 module.exports = {
   getByCategoryId: function(categoryId, callback) {
-    Product.find({ category: categoryId }).select("_id name").exec(callback);
+    Product.find({ category: categoryId }).select(PRODUCTS_PROJECTION).exec(callback);
+  },
+  getBySubcategoryId: function(subcategoryId, callback) {
+    Product.find({ subcategory: subcategoryId }).select(PRODUCTS_PROJECTION).exec(callback);
   },
   seedInitial: function(data, callback) {
     Product.find({}).exec(function(err, collection) {

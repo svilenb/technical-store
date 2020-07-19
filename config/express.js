@@ -3,7 +3,7 @@ const session = require('express-session');
 const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const logger = require("morgan");
-const indexRouter = require("../routes/index");
+const homeRouter = require("../routes/home");
 const loginRouter = require("../routes/login");
 const logoutRouter = require("../routes/logout");
 const categoriesRouter = require("../routes/categories");
@@ -39,38 +39,7 @@ module.exports = function(app, config) {
     next();
   });
 
-  app.use(function(req, res, next) {
-    async.parallel([
-      function(callback) {
-        categoriesData.getAll(function(err, results) {
-          if (err) {
-            return callback(err);
-          }
-
-          res.locals.categories = results;
-          callback();
-        });
-      },
-      function(callback) {
-        subcategoriesData.getAll(function(err, results) {
-          if (err) {
-            return callback(err);
-          }
-
-          res.locals.subcategories = results;
-          callback();
-        });
-      }
-    ], function(err) {
-      if (err) {
-        return next(err);
-      }
-
-      next();
-    });
-  });
-
-  app.use("/", indexRouter);
+  app.use("/", homeRouter);
   app.use("/login", loginRouter);
   app.use("/logout", logoutRouter);
   app.use("/category", categoriesRouter);

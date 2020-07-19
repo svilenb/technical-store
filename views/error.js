@@ -12,12 +12,18 @@ export default function Error(props) {
         <Typography variant="body1" gutterBottom>
           {props.message}
         </Typography>
-        <Typography variant="body2" gutterBottom>
-        {props.error.status}
-        </Typography>
-        <pre>
-          {props.error.stack}
-        </pre>
+        {
+          !!props.error && (
+            <>
+              <Typography variant="body2" gutterBottom>
+                {props.error.status}
+              </Typography>
+              <pre>
+                {props.error.stack}
+              </pre>
+            </>
+          )
+        }
       </Box>
     </Container>
   );

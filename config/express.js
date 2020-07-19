@@ -90,8 +90,8 @@ module.exports = function(app, config) {
       res.status(status).send({ error: message });
     } else {
       // set locals, only providing error in development
-      res.locals.viewData.message = message;
-      res.locals.viewData.error = error;
+      res.locals.message = message;
+      res.locals.error = error;
 
       // render the error page
       res.status(status);

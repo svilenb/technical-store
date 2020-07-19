@@ -19,6 +19,7 @@ module.exports = {
               `${picturesPath}11463897874462.jpg`,
             ],
             brand: data.brands[0],
+            comments: [],
           },
           {
             name: "TV LG 32LM550BPLB LED 32.0",
@@ -30,6 +31,7 @@ module.exports = {
               `${picturesPath}11651329982494.jpg`,
             ],
             brand: data.brands[0],
+            comments: [],
           },
           {
             name: "TV LG 32LM630BPLA LED SMART TV, WEBOS",
@@ -40,6 +42,7 @@ module.exports = {
               `${picturesPath}11768966086686.jpg`,
             ],
             brand: data.brands[0],
+            comments: [],
           },
 
           {
@@ -52,7 +55,8 @@ module.exports = {
               `${picturesPath}11479762894878.jpg`,
               `${picturesPath}11479763091486.jpg`,
             ],
-            brand: data.brands[1]
+            brand: data.brands[1],
+            comments: [],
           },
           {
             name: "TV PANASONIC TX-65GZ1500E 4K Ultra HD OLED SMART TV",
@@ -63,7 +67,8 @@ module.exports = {
               `${picturesPath}11704007819294.jpg`,
               `${picturesPath}11704008015902.jpg`,
             ],
-            brand: data.brands[1]
+            brand: data.brands[1],
+            comments: [],
           }
         ];
 

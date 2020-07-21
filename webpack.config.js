@@ -10,7 +10,8 @@ module.exports = {
     admin_categories: "./admin_categories.js",
     admin_category: "./admin_category.js",
     admin_create_category: "./admin_create_category.js",
-    signup_index: "./signup_index.js"
+    signup_index: "./signup_index.js",
+    products_view: "./products_view.js",
   },
   mode: process.env.NODE_ENV || 'development',
   output: {

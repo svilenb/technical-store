@@ -81,7 +81,7 @@ export default function Products(props) {
                         <Button size="small" color="primary">
                           Share
                         </Button>
-                        <Button size="small" color="primary">
+                        <Button size="small" color="primary" href={`/products/${product._id}`}>
                           Learn More
                         </Button>
                       </CardActions>

@@ -4,7 +4,8 @@ const neo4jConfig = require("../config/neo4j");
 
 const picturesPath = '/img/products/';
 
-const PRODUCTS_PROJECTION = "_id name description photos";
+const PRODUCTS_PROJECTION = "_id name description photos comments price model";
+const PRODUCT_PROJECTION = "_id name description photos comments price model brand category subcategory";
 
 const create = function(data, callback) {
   Product.create(data, function(err, results) {
@@ -37,6 +38,9 @@ const create = function(data, callback) {
 }
 
 module.exports = {
+  getById: function(id, callback) {
+    Product.findOne({ _id: id }).populate("brand category subcategory").select(PRODUCT_PROJECTION).exec(callback);
+  },
   getByCategoryId: function(categoryId, callback) {
     Product.find({ category: categoryId }).select(PRODUCTS_PROJECTION).exec(callback);
   },
@@ -56,7 +60,7 @@ module.exports = {
               `${picturesPath}11463897874462.jpg`,
             ],
             brand: data.brands[0],
-            comments: [],
+            comments: ["Best TV ever!", "Not bad for the price", "Works fine :)"],
           },
           {
             name: "TV LG 32LM550BPLB LED 32.0",

@@ -11,6 +11,7 @@ const logoutRouter = require("../routes/logout");
 const signupRouter = require("../routes/signup");
 const categoriesRouter = require("../routes/categories");
 const adminRouter = require("../routes/admin");
+const productsRouter = require("../routes/products");
 const engine = require("../utils/engine");
 const passport = require('passport');
 const categoriesData = require("../data/categories");
@@ -55,6 +56,7 @@ module.exports = function(app, config) {
   app.use("/signup", signupRouter);
   app.use("/category", categoriesRouter);
   app.use("/admin", adminRouter);
+  app.use("/products", productsRouter);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const encryption = require("../../utils/encryption");
 
 const userSchema = mongoose.Schema({
-  name: { type: String },
+  name: { type: String, required: true },
   photo: String,
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   phonuNumber: String,
-  roles: [String],
+  roles: { type: [String], default: [] },
   salt: { type: String, required: true },
   hashPass: { type: String, required: true }
 });

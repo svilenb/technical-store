@@ -1,4 +1,3 @@
-const express = require("express");
 const categoriesData = require("../data/categories");
 
 const CONTROLLER_NAME = "admin";

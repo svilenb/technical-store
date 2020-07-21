@@ -6,7 +6,6 @@ const CONTROLLER_NAME = "home";
 
 module.exports = {
   getIndex: function(req, res, next) {
-
     async.parallel({
       categories: function(callback) {
         categoriesData.getAll(callback);

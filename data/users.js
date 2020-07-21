@@ -12,6 +12,7 @@ module.exports = {
 
         User.create(names.map(function(name) {
           const username = name.toLowerCase(name);
+
           return {
             name,
             username: username,
@@ -54,5 +55,8 @@ module.exports = {
   },
   getById: function(id, callback) {
     User.findOne({ _id: id }).select("_id name username email roles").exec(callback);
+  },
+  create: function(data, callback) {
+    User.create(data, callback);
   }
 };

@@ -36,7 +36,9 @@ export default function CategoriesNav(props) {
   return (
     <div className={classes.accordionRoot}>
       {
-        props.categories.map(function(category) {
+        props.categories.filter(function(category) {
+          return category.active;
+        }).map(function(category) {
           return (
             <Accordion
               key={category.name}

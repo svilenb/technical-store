@@ -13,6 +13,13 @@ module.exports = {
       next();
     }
   },
+  isGuest: function(req, res, next) {
+    if (req.isAuthenticated()) {
+      res.redirect('/');
+    } else {
+      next();
+    }
+  },
   isInRole: function(role) {
     return function(req, res, next) {
       if (req.isAuthenticated() && req.user.roles.indexOf(role) > -1) {

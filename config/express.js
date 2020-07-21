@@ -4,9 +4,11 @@ const redis = require("redis")
 const cookieParser = require("cookie-parser");
 const createError = require("http-errors");
 const logger = require("morgan");
+const busboy = require('connect-busboy');
 const homeRouter = require("../routes/home");
 const loginRouter = require("../routes/login");
 const logoutRouter = require("../routes/logout");
+const signupRouter = require("../routes/signup");
 const categoriesRouter = require("../routes/categories");
 const adminRouter = require("../routes/admin");
 const engine = require("../utils/engine");
@@ -26,6 +28,9 @@ module.exports = function(app, config) {
   app.use(cookieParser());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(busboy({
+    immediate: false
+  }));
   app.use(session({
     store: new RedisStore({ client: redisClient }),
     secret: "magic unicorns",
@@ -47,6 +52,7 @@ module.exports = function(app, config) {
   app.use("/", homeRouter);
   app.use("/login", loginRouter);
   app.use("/logout", logoutRouter);
+  app.use("/signup", signupRouter);
   app.use("/category", categoriesRouter);
   app.use("/admin", adminRouter);
 

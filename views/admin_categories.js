@@ -56,7 +56,7 @@ export default function AdminCategories(props) {
         subheader={(
           <ListSubheader className={classes.subheader}>
             <span>Categories</span>
-            <Button variant="outlined" color="primary" size="small">Add New</Button>
+            <Button variant="outlined" color="primary" size="small" href="/admin/categories/create">Add New</Button>
           </ListSubheader>
         )}
         className={classes.root}>

@@ -12,6 +12,9 @@ module.exports = {
   getByName: function(name, callback) {
     Category.findOne({ name }).select(CATEGORIES_PROJECTION).exec(callback);
   },
+  create: function(data, callback) {
+    Category.create(data, callback);
+  },
   updateById: function(id, data, callback) {
     Category.findByIdAndUpdate(id, data, callback);
   },

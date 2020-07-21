@@ -15,6 +15,9 @@ module.exports = {
       });
     });
   },
+  getCreateCategory: function(req, res, next) {
+    res.render(CONTROLLER_NAME + "_create_category");
+  },
   getCategory: function(req, res, next) {
     categoriesData.getById(req.params.id, function(err, category) {
       if (err) {

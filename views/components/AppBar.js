@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import * as Yup from "yup";
@@ -27,6 +28,10 @@ const loginSchema = Yup.object().
     .max(PASSWORD_MAX_LENGTH, PASSWORD_VALIDATION_MESSAGE)
     .required("Required")
   });
+
+function MenuItemLink(props) {
+  return <MenuItem button component="a" {...props} />;
+}
 
 const useStyles = makeStyles(function(theme) {
   return {
@@ -99,6 +104,11 @@ export default function AppBar(props) {
           !!props.currentUser ? (
             <div>
               <IconButton
+                color="inherit"
+              >
+                <ShoppingCart />
+              </IconButton>
+              <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
@@ -122,6 +132,27 @@ export default function AppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
+                <MenuItemLink href="/profile">Profile</MenuItemLink>
+                {
+                  props.currentUser.roles.includes("admin") && (
+                      <MenuItemLink href="/admin/categories">Manage categories</MenuItemLink>
+                  )
+                }
+                {
+                  props.currentUser.roles.includes("admin") && (
+                      <MenuItemLink href="/admin/subcategories">Manage subcategories</MenuItemLink>
+                  )
+                }
+                {
+                  props.currentUser.roles.includes("admin") && (
+                      <MenuItemLink href="/admin/brands">Manage brands</MenuItemLink>
+                  )
+                }
+                {
+                  props.currentUser.roles.includes("admin") && (
+                      <MenuItemLink href="/admin/products">Manage products</MenuItemLink>
+                  )
+                }
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>

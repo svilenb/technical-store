@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Product = require("./models/product");
 const neo4jConfig = require("../config/neo4j");
+const async = require("async");
 
 const picturesPath = '/img/products/';
 
@@ -37,10 +38,68 @@ const create = function(data, callback) {
   });
 }
 
+const getById = function(id, callback) {
+  Product.findOne({ _id: id }).populate("brand category subcategory").select(PRODUCT_PROJECTION).exec(callback);
+}
+
 module.exports = {
-  getById: function(id, callback) {
-    Product.findOne({ _id: id }).populate("brand category subcategory").select(PRODUCT_PROJECTION).exec(callback);
+  buy: function(productId, userId, callback) {
+    getById(productId, function(err, product) {
+      const session = neo4jConfig.getDriver().session();
+
+      async.series([
+        function(callback) {
+          const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:Product {id: $productIdParam}) MERGE (j)-[r:PURCHASED]->(m) RETURN j, r, m`;
+
+          session.run(cypherQuery, {
+            userIdParam: userId.toString(),
+            productIdParam: productId.toString()
+          }).then(function(result) {
+            callback(null, result);
+          }).catch(callback);
+        },
+        function(callback) {
+          const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:Category {id: $categoryIdParam}) MERGE (j)-[r:PURCHASED_FROM]->(m) RETURN j, r, m`;
+
+          session.run(cypherQuery, {
+            userIdParam: userId.toString(),
+            categoryIdParam: product.category._id.toString()
+          }).then(function(result) {
+            callback(null, result);
+          }).catch(callback);
+        },
+        function(callback) {
+          const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:Subcategory {id: $subcategoryIdParam}) MERGE (j)-[r:PURCHASED_FROM]->(m) RETURN j, r, m`;
+
+          session.run(cypherQuery, {
+            userIdParam: userId.toString(),
+            subcategoryIdParam: product.subcategory._id.toString()
+          }).then(function(result) {
+            callback(null, result);
+          }).catch(callback);
+        },
+        function(callback) {
+          const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:Brand {id: $brandIdParam}) MERGE (j)-[r:PURCHASED_FROM]->(m) RETURN j, r, m`;
+
+          session.run(cypherQuery, {
+            userIdParam: userId.toString(),
+            brandIdParam: product.brand._id.toString()
+          }).then(function(result) {
+            callback(null, result);
+          }).catch(callback);
+        },
+      ], function(err) {
+        if (err) {
+          session.close();
+          return callback(err);
+        }
+
+        session.close();
+        callback();
+      });
+    });
   },
+  getById,
   getByCategoryId: function(categoryId, callback) {
     Product.find({ category: categoryId }).select(PRODUCTS_PROJECTION).exec(callback);
   },

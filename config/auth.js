@@ -8,7 +8,11 @@ module.exports = {
   },
   isAuthenticated: function(req, res, next) {
     if (!req.isAuthenticated()) {
-      res.redirect('/');
+      if (req.xhr) {
+        res.status(403).send("Forbidden");
+      } else {
+        res.redirect('/');
+      }
     } else {
       next();
     }

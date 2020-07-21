@@ -1,7 +1,10 @@
 import React from "react";
+import axios from "axios";
 import { makeStyles } from '@material-ui/core/styles';
+import { useSnackbar } from "notistack"
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -31,12 +34,25 @@ const useStyles = makeStyles(function(theme) {
 
 export default function ProductsView(props) {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
   const [photoIndex, setPhotoIndex] = React.useState(0);
 
   const handleTileClick = function(photoIndex) {
     return function() {
       setPhotoIndex(photoIndex);
     }
+  }
+
+  const handleBuyClick = function() {
+    axios({
+      method: "post",
+      url: `/products/${props.product._id}/buy`,
+      headers: {'X-Requested-With': 'XMLHttpRequest'},
+    }).then(function() {
+      window.location.reload(false);
+    }).catch(function(err) {
+      enqueueSnackbar(err.message, { variant: "error" });
+    });
   }
 
   return (
@@ -69,9 +85,18 @@ export default function ProductsView(props) {
                 </Typography>
               )
             }
-            <Typography variant="body1" gutterBottom>
-              Price: {props.product.price} BGN
-            </Typography>
+            <Box display="flex" justifyContent="space-between" py={3}>
+              <Typography variant="body1" gutterBottom>
+                Price: {props.product.price} BGN
+              </Typography>
+              {
+                !!props.currentUser && (
+                  <Button variant="contained" color="primary" onClick={handleBuyClick}>
+                    Buy
+                  </Button>
+                )
+              }
+            </Box>
             <Typography variant="body1" gutterBottom>
               Brand: {props.product.brand.name}
             </Typography>

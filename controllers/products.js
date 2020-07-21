@@ -13,5 +13,14 @@ module.exports = {
         product
       });
     });
+  },
+  buy: function(req, res, next) {
+    productsData.buy(req.params.id, req.user._id, function(err) {
+      if (err) {
+        return next(err);
+      }
+
+      res.status(200).send("Success");
+    });
   }
 };

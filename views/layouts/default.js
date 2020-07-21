@@ -7,13 +7,11 @@ import Copyright from "../components/Copyright";
 export default function DefaultLayout(props) {
   return (
     <div>
-      <SnackbarProvider maxSnack={3}>
-        <AppBar {...props} />
-        <Container maxWidth="xl">
-          {props.children}
-          <Copyright />
-        </Container>
-      </SnackbarProvider>
+      <AppBar {...props} />
+      <Container maxWidth="xl">
+        {props.children}
+        <Copyright />
+      </Container>
     </div>
   );
 }

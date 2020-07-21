@@ -8,8 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import * as Yup from "yup"
-import { Formik, Form, Field } from "formik"
+import * as Yup from "yup";
+import { Formik, Form, Field } from "formik";
 import { InputBase } from 'formik-material-ui';
 import { PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH } from "../../consts";
 import { useSnackbar } from "notistack"
@@ -83,7 +83,7 @@ export default function AppBar(props) {
       url: "/logout",
       headers: {'X-Requested-With': 'XMLHttpRequest'},
     }).then(function() {
-      window.location.reload(false); 
+      window.location.reload(false);
     }).catch(function(err) {
       enqueueSnackbar(err.message, { variant: "error" });
     });
@@ -159,7 +159,7 @@ export default function AppBar(props) {
                           classes={{ root: classes.inputRoot, input: classes.inputInput }}
                           component={InputBase}
                           name="username"
-                          type="username"
+                          type="text"
                           placeholder="Username"
                         />
                       </div>

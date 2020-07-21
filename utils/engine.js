@@ -3,6 +3,7 @@ import path from 'path';
 import ReactDOMServer from 'react-dom/server';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider } from "notistack"
 import theme from './theme';
 import _ from "lodash";
 
@@ -34,7 +35,9 @@ module.exports = function(filePath, options, callback) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          {React.createElement(component, props)}
+          <SnackbarProvider maxSnack={3}>
+            {React.createElement(component, props)}
+          </SnackbarProvider>
         </ThemeProvider>,
       ),
     );

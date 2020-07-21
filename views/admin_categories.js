@@ -11,6 +11,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import IconButton from '@material-ui/core/IconButton';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import { useSnackbar } from "notistack"
 
 const useStyles = makeStyles(function(theme) {
   return {
@@ -27,8 +29,26 @@ const useStyles = makeStyles(function(theme) {
   }
 });
 
-export default function Categories(props) {
+export default function AdminCategories(props) {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleToggle = function(category) {
+    return function() {
+      axios({
+        method: "patch",
+        url: `/category/${category._id}`,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        data: {
+          active: !category.active
+        }
+      }).then(function() {
+        window.location.reload(false);
+      }).catch(function(err) {
+        enqueueSnackbar(err.message, { variant: "error" });
+      });
+    }
+  }
 
   return (
     <DefaultLayout {...props}>
@@ -47,13 +67,13 @@ export default function Categories(props) {
                 <ListItemIcon>
                   <Switch
                     edge="start"
-                    // onChange={handleToggle('wifi')}
-                    // checked={checked.indexOf('wifi') !== -1}
+                    onChange={handleToggle(category)}
+                    checked={category.active}
                   />
                 </ListItemIcon>
                 <ListItemText primary={category.name} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end">
+                  <IconButton edge="end" href={`/admin/categories/${category._id}`}>
                     <EditIcon />
                   </IconButton>
                 </ListItemSecondaryAction>

@@ -15,4 +15,15 @@ module.exports = {
       });
     });
   },
+  getCategory: function(req, res, next) {
+    categoriesData.getById(req.params.id, function(err, category) {
+      if (err) {
+        return next(err);
+      }
+
+      res.render(CONTROLLER_NAME + "_category", {
+        category
+      });
+    });
+  }
 };

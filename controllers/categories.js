@@ -48,5 +48,14 @@ module.exports = {
         });
       });
     });
+  },
+  patch: function(req, res, next) {
+    categoriesData.updateById(req.params.id, req.body, function(err) {
+      if (err) {
+        return next(err);
+      }
+
+      res.status(200).send("Success");
+    });
   }
 };

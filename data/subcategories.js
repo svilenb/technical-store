@@ -1,16 +1,18 @@
 const Subcategory = require("./models/subcategory");
 
+const SUBCATEGORIES_PROJECTION = "_id name category active";
+
 module.exports = {
   getAll: function(callback) {
-    Subcategory.find().select("_id name category").exec(callback);
+    Subcategory.find().select(SUBCATEGORIES_PROJECTION).exec(callback);
   },
   getByName: function(name, callback) {
-    Subcategory.findOne({ name }).select("_id name category").exec(callback);
+    Subcategory.findOne({ name }).select(SUBCATEGORIES_PROJECTION).exec(callback);
   },
   seedInitial: function(categories, callback) {
     Subcategory.find({}).exec(function(err, collection) {
       if (collection.length === 0) {
-        Subcategory.create([
+        const baseSubcategories = [
           { name: "TV", category: categories[0]._id },
           { name: "Soundbars", category: categories[0]._id },
           { name: "Home Theaters", category: categories[0]._id },
@@ -43,7 +45,14 @@ module.exports = {
           { name: "Freezers", category: categories[4]._id },
           { name: "Refrigerators", category: categories[4]._id },
           { name: "Cookers", category: categories[4]._id },
-        ], callback);
+        ];
+
+        Subcategory.create(baseSubcategories.map(function(subcategory) {
+          return {
+            ...subcategory,
+            active: true
+          };
+        }), callback);
       } else {
         callback(null, collection);
       }

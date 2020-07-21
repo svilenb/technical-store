@@ -6,7 +6,9 @@ module.exports = {
   context: path.resolve(__dirname, 'public/javascripts'),
   entry: {
     home_index: './home_index.js',
-    categories_products: './categories_products.js'
+    categories_products: './categories_products.js',
+    admin_categories: "./admin_categories.js",
+    admin_category: "./admin_category.js",
   },
   mode: process.env.NODE_ENV || 'development',
   output: {

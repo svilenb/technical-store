@@ -78,10 +78,42 @@ module.exports = {
   getById: function(id, callback) {
     User.findOne({ _id: id }).select(USERS_PROJECTION).exec(callback);
   },
+  areFriends: function(userId, friendId, callback) {
+    const session = neo4jConfig.getDriver().session();
+
+    const cypherQuery = `MATCH (me:User {id: $userIdParam})-[r:IS_FRIENDS_WITH]->(f:User {id: $friendIdParam}) return r`;
+
+    session.run(cypherQuery, {
+      userIdParam: userId.toString(),
+      friendIdParam: friendId.toString()
+    }).then(function(result) {
+      session.close();
+      callback(null, !!result.records.length);
+    }).catch(function(err) {
+      session.close();
+      callback(err);
+    });
+  },
   friend: function(friendId, userId, callback) {
     const session = neo4jConfig.getDriver().session();
 
     const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:User {id: $friendIdParam}) MERGE (j)-[r:IS_FRIENDS_WITH]->(m) RETURN j, r, m`;
+
+    session.run(cypherQuery, {
+      userIdParam: userId.toString(),
+      friendIdParam: friendId.toString()
+    }).then(function(result) {
+      session.close();
+      callback(null, result);
+    }).catch(function(err) {
+      session.close();
+      callback(err);
+    });
+  },
+  unfriend: function(friendId, userId, callback) {
+    const session = neo4jConfig.getDriver().session();
+
+    const cypherQuery = `MATCH (j:User {id: $userIdParam})-[r:IS_FRIENDS_WITH]->(m:User {id: $friendIdParam}) DELETE (r)`;
 
     session.run(cypherQuery, {
       userIdParam: userId.toString(),

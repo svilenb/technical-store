@@ -31,8 +31,11 @@ module.exports = {
         return next(err);
       }
 
-      res.render(CONTROLLER_NAME + "_view", {
-        user
+      usersData.areFriends(req.user.id, req.params.id, function(err, areFriends) {
+        res.render(CONTROLLER_NAME + "_view", {
+          user,
+          areFriends
+        });
       });
     });
   },
@@ -44,5 +47,14 @@ module.exports = {
 
       res.status(200).send("Success");
     });
-  }
+  },
+  unfriend: function(req, res, next) {
+    usersData.unfriend(req.params.id, req.user._id, function(err) {
+      if (err) {
+        return next(err);
+      }
+
+      res.status(200).send("Success");
+    });
+  },
 };

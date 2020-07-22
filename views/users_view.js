@@ -24,7 +24,7 @@ export default function UsersView(props) {
   const handleAddFriendClick = function() {
     axios({
       method: "post",
-      url: `/users/${props.user._id}/friend`,
+      url: `/users/${props.user._id}/${props.areFriends ? "unfriend" : "friend"}`,
       headers: {'X-Requested-With': 'XMLHttpRequest'},
     }).then(function() {
       window.location.reload(false);
@@ -55,8 +55,8 @@ export default function UsersView(props) {
           }
           {
             !!props.currentUser && props.currentUser._id !== props.user._id && (
-              <Button variant="contained" color="secondary" onClick={handleAddFriendClick}>
-                Add friend
+              <Button variant="outlined" color="secondary" onClick={handleAddFriendClick}>
+                {props.areFriends ? "Unfriend" : "Add friend"}
               </Button>
             )
           }

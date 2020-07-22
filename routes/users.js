@@ -8,5 +8,6 @@ router.get("/", usersController.getAll);
 router.get("/me", auth.isAuthenticated, usersController.getMe);
 router.get("/:id", usersController.getUser);
 router.post("/:id/friend", auth.isAuthenticated, usersController.friend);
+router.post("/:id/unfriend", auth.isAuthenticated, usersController.unfriend);
 
 module.exports = router;

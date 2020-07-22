@@ -3,6 +3,17 @@ const usersData = require("../data/users");
 const CONTROLLER_NAME = "users";
 
 module.exports = {
+  getAll: function(req, res, next) {
+    usersData.getAll(function(err, users) {
+      if (err) {
+        return next(err);
+      }
+
+      res.render(CONTROLLER_NAME + "_index", {
+        users
+      });
+    });
+  },
   getMe: function(req, res, next) {
     usersData.getById(req.user._id, function(err, user) {
       if (err) {

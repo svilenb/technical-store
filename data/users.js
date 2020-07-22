@@ -72,6 +72,9 @@ module.exports = {
   getAuthByUsername: function(username, callback) {
     User.findOne({ username }).select("_id name username email roles salt hashPass").exec(callback);
   },
+  getAll: function(callback) {
+    User.find().select(USERS_PROJECTION).exec(callback);
+  },
   getById: function(id, callback) {
     User.findOne({ _id: id }).select(USERS_PROJECTION).exec(callback);
   },

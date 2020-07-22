@@ -164,6 +164,7 @@ export default function AppBar(props) {
                     <MenuItemLink href="/admin/products">Manage products</MenuItemLink>
                   )
                 }
+                <MenuItemLink href="/users">Find friends</MenuItemLink>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>
             </div>

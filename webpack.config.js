@@ -13,6 +13,7 @@ module.exports = {
     signup_index: "./signup_index.js",
     products_view: "./products_view.js",
     users_view: "./users_view.js",
+    users_index: "./users_index.js",
   },
   mode: process.env.NODE_ENV || 'development',
   output: {

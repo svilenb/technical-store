@@ -57,7 +57,7 @@ export default function Signup(props) {
             name: "",
             username: "",
             email: "",
-            passpord: "",
+            password: "",
             passwordConfirm: "",
             phoneNumber: "",
           }}

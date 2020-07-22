@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSnackbar } from "notistack"
 import Typography from '@material-ui/core/Typography';
@@ -10,9 +11,13 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import DefaultLayout from "./layouts/default"
 import List from '@material-ui/core/List';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import CommentIcon from '@material-ui/icons/Comment';
 
 const useStyles = makeStyles(function(theme) {
   return {
@@ -106,6 +111,37 @@ export default function ProductsView(props) {
             <Typography variant="body1" gutterBottom>
               Subcategory: {props.product.subcategory.name}
             </Typography>
+            {
+              !!props.friendsPurchasedProduct.length && (
+                <Box py={2}>
+                  <List dense className={classes.listRoot}
+                    subheader={
+                      <ListSubheader component="div">
+                        Friends that already bought {props.product.name}
+                      </ListSubheader>
+                    }
+                  >
+                    {
+                      props.friendsPurchasedProduct.map(function(friend) {
+                        return (
+                          <ListItem key={friend.id} button>
+                            <ListItemAvatar>
+                              <Avatar />
+                            </ListItemAvatar>
+                            <ListItemText primary={friend.name} />
+                            <ListItemSecondaryAction>
+                              <IconButton edge="end" href={`/users/${friend.id}`}>
+                                <CommentIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        );
+                      })
+                    }
+                  </List>
+                </Box>
+              )
+            }
             {
               !!props.product.comments.length && (
                 <div className={classes.listRoot}>

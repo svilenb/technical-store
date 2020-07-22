@@ -52,6 +52,7 @@ module.exports = {
             name,
             username: username,
             email: `${username}@gmail.com`,
+            phoneNumber: "(000) 123-4567",
             roles: username === "svilen" ? ["admin"] : [],
             salt,
             hashPass
@@ -64,7 +65,7 @@ module.exports = {
           return userObj;
         }), callback);
       } else {
-        callback(null, collection);
+        callback();
       }
     });
   },

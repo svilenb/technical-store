@@ -86,7 +86,7 @@ module.exports = {
           };
         }), callback);
       } else {
-        callback(null, collection);
+        callback();
       }
     });
   },

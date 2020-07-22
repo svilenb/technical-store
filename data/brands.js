@@ -46,7 +46,7 @@ module.exports = {
           { name: "BOSCH" },
         ], callback);
       } else {
-        callback(null, collection);
+        callback();
       }
     });
   },

@@ -63,7 +63,7 @@ module.exports = {
           return { name, active: true };
         }), callback);
       } else {
-        callback(null, collection);
+        callback(null, null);
       }
     });
   },

@@ -3,6 +3,10 @@ const User = require("./models/user");
 const neo4jConfig = require("../config/neo4j");
 const encryption = require("../utils/encryption");
 
+const picturesPath = '/img/users/';
+
+const USERS_PROJECTION = "_id name username email roles photo phoneNumber";
+
 const create = function(data, callback) {
   User.create(data, function(err, results) {
     if (err) {
@@ -44,7 +48,7 @@ module.exports = {
         create(names.map(function(name) {
           const username = name.toLowerCase(name);
 
-          return {
+          const userObj = {
             name,
             username: username,
             email: `${username}@gmail.com`,
@@ -52,6 +56,12 @@ module.exports = {
             salt,
             hashPass
           }
+
+          if (username === "svilen") {
+            userObj.photo = `${picturesPath}6726862.jpeg`
+          }
+
+          return userObj;
         }), callback);
       } else {
         callback(null, collection);
@@ -62,7 +72,23 @@ module.exports = {
     User.findOne({ username }).select("_id name username email roles salt hashPass").exec(callback);
   },
   getById: function(id, callback) {
-    User.findOne({ _id: id }).select("_id name username email roles").exec(callback);
+    User.findOne({ _id: id }).select(USERS_PROJECTION).exec(callback);
+  },
+  friend: function(friendId, userId, callback) {
+    const session = neo4jConfig.getDriver().session();
+
+    const cypherQuery = `MATCH (j:User {id: $userIdParam}) MATCH (m:User {id: $friendIdParam}) MERGE (j)-[r:IS_FRIENDS_WITH]->(m) RETURN j, r, m`;
+
+    session.run(cypherQuery, {
+      userIdParam: userId.toString(),
+      friendIdParam: friendId.toString()
+    }).then(function(result) {
+      session.close();
+      callback(null, result);
+    }).catch(function(err) {
+      session.close();
+      callback(err);
+    });
   },
   create
 };

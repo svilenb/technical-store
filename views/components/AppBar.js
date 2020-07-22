@@ -143,7 +143,7 @@ export default function AppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItemLink href="/profile">Profile</MenuItemLink>
+                <MenuItemLink href="/users/me">Profile</MenuItemLink>
                 {
                   props.currentUser.roles.includes("admin") && (
                     <MenuItemLink href="/admin/categories">Manage categories</MenuItemLink>

@@ -16,11 +16,19 @@ module.exports = {
         } else {
           callback();
         }
+      },
+      friendsWithAcquaintancePurchasedProduct: function(callback) {
+        if (req.user) {
+          recommendationData.getFriendsWithAcquaintancePurchasedProduct(req.user._id, req.params.id, callback);
+        } else {
+          callback();
+        }
       }
     }, function (err, results) {
       res.render(CONTROLLER_NAME + "_view", {
         product: results.product,
-        friendsPurchasedProduct: results.friendsPurchasedProduct
+        friendsPurchasedProduct: results.friendsPurchasedProduct,
+        friendsWithAcquaintancePurchasedProduct: results.friendsWithAcquaintancePurchasedProduct
       });
     });
   },

@@ -143,6 +143,37 @@ export default function ProductsView(props) {
               )
             }
             {
+              !!props.friendsWithAcquaintancePurchasedProduct.length && (
+                <Box py={2}>
+                  <List dense className={classes.listRoot}
+                    subheader={
+                      <ListSubheader component="div">
+                        Friends that know somebody who already bought {props.product.name}
+                      </ListSubheader>
+                    }
+                  >
+                    {
+                      props.friendsWithAcquaintancePurchasedProduct.map(function(friend) {
+                        return (
+                          <ListItem key={friend.id} button>
+                            <ListItemAvatar>
+                              <Avatar />
+                            </ListItemAvatar>
+                            <ListItemText primary={friend.name} />
+                            <ListItemSecondaryAction>
+                              <IconButton edge="end" href={`/users/${friend.id}`}>
+                                <CommentIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                        );
+                      })
+                    }
+                  </List>
+                </Box>
+              )
+            }
+            {
               !!props.product.comments.length && (
                 <div className={classes.listRoot}>
                   <List

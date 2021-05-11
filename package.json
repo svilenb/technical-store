@@ -23,7 +23,7 @@
     "formik": "2.0.7",
     "formik-material-ui": "^2.0.0-beta.1",
     "http-errors": "~1.6.3",
-    "lodash": "~4.17.19",
+    "lodash": "~4.17.21",
     "mongoose": "~5.9.22",
     "morgan": "~1.9.1",
     "neo4j-driver": "^4.1.0",
